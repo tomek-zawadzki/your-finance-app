@@ -16,7 +16,7 @@ const deleteAllBtn = document.querySelector(".delete-all");
 let root = document.documentElement;
 let ID = 0;
 let categoryIcon;
-let selectCategory;
+let selectedCategory;
 let moneyArr = [0];
 
 const showPanel = () => {
@@ -34,10 +34,60 @@ const checkForm = () => {
     amountInput.value !== "" &&
     categorySelect.value !== "none"
   ) {
-    console.log("ok");
+    createNewTransaction();
   } else {
     alert("Wypełnij wszystkie pola!");
   }
+};
+
+const createNewTransaction = () => {
+  const newTransaction = document.createElement("div");
+  newTransaction.classList.add("transaction");
+  newTransaction.setAttribute("id", ID);
+
+  checkCategory(selectedCategory);
+
+  newTransaction.innerHTML = `
+        <p class="transaction-name">
+            ${categoryIcon} ${nameInput.value}
+        </p>
+        <p class="transaction-amount">${amountInput.value}
+            <button class="delete" onclick="deleteTransaction(${ID}zł)>< class="fas fa-times"></</button>
+        </p>
+    `;
+
+  amountInput.value > 0
+    ? incomeSection.appendChild(newTransaction) &&
+      newTransaction.classList.add("income")
+    : expensesSection.appendChild(newTransaction) &&
+      newTransaction.classList("expenses");
+
+  moneyArr.push(+amountInput.value);
+
+  closePanel();
+  ID++;
+  clearInputs();
+};
+
+const checkCategory = (transaction) => {
+  switch (transaction) {
+    case "[ + ] Przychód":
+      categoryIcon = `<i class="fas fa-money-bill-wave"></i>`;
+      break;
+    case "[ - ] Zakupy":
+      categoryIcon = `<i class="fas fa-cart-arrow-down"></i>`;
+      break;
+    case "[ - ] Jedzenie":
+      categoryIcon = `<i class="fas fa-hamburger"></i>`;
+      break;
+    case "[ - ] Kino":
+      categoryIcon = `<i class="fas fa-film"></i>`;
+      break;
+  }
+};
+
+const selectCategory = () => {
+  selectedCategory = categorySelect.options[categorySelect.selectedIndex].text;
 };
 
 const clearInputs = () => {
