@@ -62,7 +62,7 @@ const createNewTransaction = () => {
     : expensesSection.appendChild(newTransaction) &&
       newTransaction.classList.add("expenses");
 
-  moneyArr.push(+amountInput.value);
+  moneyArr.push(parseFloat(amountInput.value));
   countMoney(moneyArr);
   closePanel();
   ID++;
@@ -117,6 +117,14 @@ const deleteTransaction = (id) => {
   countMoney(moneyArr);
 };
 
+const deleteAllTransactions = () => {
+  incomeSection.innerHTML = "<h3>Przychód :</h3>";
+  expensesSection.innerHTML = "<h3>Wydatki :</h3>";
+  availableMoney.textContent = "0";
+  moneyArr = [0];
+};
+
 addTransactionBtn.addEventListener("click", showPanel);
 cancelBtn.addEventListener("click", closePanel);
 saveBtn.addEventListener("click", checkForm);
+deleteAllBtn.addEventListener("click", deleteAllTransactions);
