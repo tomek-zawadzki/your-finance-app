@@ -52,7 +52,7 @@ const createNewTransaction = () => {
             ${categoryIcon} ${nameInput.value}
         </p>
         <p class="transaction-amount">${amountInput.value}
-            <button class="delete" onclick="deleteTransaction(${ID}zł)>< class="fas fa-times"></</button>
+        <button class="delete" onclick="deleteTransaction(${ID})" ><i class="fas fa-times"></i></button>   
         </p>
     `;
 
@@ -99,6 +99,22 @@ const clearInputs = () => {
 const countMoney = (money) => {
   const newMoney = money.reduce((a, b) => a + b);
   availableMoney.textContent = `${newMoney}zł`;
+};
+
+const deleteTransaction = (id) => {
+  const transactionToDelete = document.getElementById(id);
+  const transactionAmount = parseFloat(
+    transactionToDelete.childNodes[3].innerText
+  );
+  const indexOfTransaction = moneyArr.indexOf(transactionAmount);
+
+  moneyArr.splice(indexOfTransaction, 1);
+
+  transactionToDelete.classList.contains("income")
+    ? incomeSection.removeChild(transactionToDelete)
+    : expensesSection.removeChild(transactionToDelete);
+
+  countMoney(moneyArr);
 };
 
 addTransactionBtn.addEventListener("click", showPanel);
