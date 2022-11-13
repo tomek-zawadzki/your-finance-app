@@ -1,5 +1,5 @@
 const incomeSection = document.querySelector(".income-area");
-const expensesSection = document.querySelector(".espenses-area");
+const expensesSection = document.querySelector(".expenses-area");
 const availableMoney = document.querySelector(".available-money");
 const addTransactionPanel = document.querySelector(".add-transaction-panel");
 
@@ -60,10 +60,10 @@ const createNewTransaction = () => {
     ? incomeSection.appendChild(newTransaction) &&
       newTransaction.classList.add("income")
     : expensesSection.appendChild(newTransaction) &&
-      newTransaction.classList("expenses");
+      newTransaction.classList.add("expenses");
 
   moneyArr.push(+amountInput.value);
-
+  countMoney(moneyArr);
   closePanel();
   ID++;
   clearInputs();
@@ -94,6 +94,11 @@ const clearInputs = () => {
   nameInput.value = "";
   amountInput.value = "";
   categorySelect.selectedIndex = 0;
+};
+
+const countMoney = (money) => {
+  const newMoney = money.reduce((a, b) => a + b);
+  availableMoney.textContent = `${newMoney}zł`;
 };
 
 addTransactionBtn.addEventListener("click", showPanel);
